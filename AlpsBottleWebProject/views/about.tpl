@@ -36,7 +36,8 @@
 	</div>
 		
 	<div id = "map-test" class = "map image-custom" >
-		<div id="map" style="height: 600px"></div>
+		<div id="map" style="height: 600px">
+		</div>
 </div>
 </div>
 <footer> </footer>

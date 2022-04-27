@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="diag.vsdx" />
+    <Content Include="libman.json" />
     <Content Include="requirements.txt" />
     <Content Include="static\content\bootstrap.css" />
     <Content Include="static\content\bootstrap.min.css" />
@@ -71,12 +72,9 @@
     <Content Include="static\scripts\respond.min.js" />
     <Content Include="static\scripts\_references.js" />
     <Content Include="views\about.tpl" />
-    <Content Include="views\contact.tpl" />
     <Content Include="views\index.tpl" />
     <Content Include="views\layout.tpl" />
-    <Content Include="views\mountain - Copy.tpl" />
     <Content Include="views\mountain.tpl" />
-    <Content Include="views\preview.tpl" />
     <Content Include="views\human.tpl" />
   </ItemGroup>
   <ItemGroup>

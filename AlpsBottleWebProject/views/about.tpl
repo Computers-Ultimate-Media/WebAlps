@@ -1,4 +1,4 @@
-% rebase('layout.tpl', title=title, year=year)
+% rebase('layout.tpl', title=title, year=year, authors=authors)
 
 <!DOCTYPE html>
 <html style="font-size: 16px;">
@@ -7,6 +7,10 @@
 	<link rel="stylesheet" type="text/css" href="/static/content/our_cute_style.css" /> 
 </head>
 <body>
+	<div class = "tb lg">
+		{{ authors }}
+	</div>
+
     <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&lang=ru_RU" type="text/javascript">
     </script>
     <script type="text/javascript"> // js Скрипт 

@@ -1,6 +1,6 @@
 % rebase('layout.tpl',title='h', year=year)
 
-<!-- Шаблон стрица с людьми -->
+<!-- Шаблон страница с людьми -->
 
 <!DOCTYPE html>
 <html style="font-size: 16px;">
@@ -12,9 +12,7 @@
 <body>
 	<div class="container-custom">
 		<div class="text-center">
-
 			<img class="img-thumbnail img-thumbnail-custom" width="822" height="612" src="{{img}}" />
-
 			<figure class="text-center">
 				<blockquote class="blockquote">
 					<p class="mb-0">Приключения случаются только если ты идёшь туда, куда не следует.</p>
@@ -39,33 +37,26 @@
 	<p>The following is <strong>rendered as bold text</strong>.</p>
 	<p>The following is <em>rendered as italicized text</em>.</p>
 	<p>An abbreviation of the word attribute is <abbr title="attribute">attr</abbr>.</p>-->
-
 			<br />
 			<h2>Общие сведения</h2>
 			<p>
 				{{common}}
 			</p>
-
 			<br />
 			<h2>Смерть</h2>
 			<p>
 				{{death}}
 			</p>
-
-			<br />
+			<br/>
 			<h2>Видеоматериалы</h2>
-			<br />
+			<br/>
 			<div class="text-center">
 				<iframe class="size-bio" marginheight="20" src="{{vid1}}" title="YouTube video player" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
 			</div>
-
-			<br />
-
+			<br/>
 			<div class="text-center">
 				<iframe class="size-bio" width="1640" height="723" src="{{vid2}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</div>
-
-
 		</div>
 	</div>
 </body>

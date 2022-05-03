@@ -1,5 +1,19 @@
-from bottle import route, view
+"""
+Routes and views for the bottle application.
+"""
+
+from bottle import route, view, error
 from datetime import datetime
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="root",
+  database="bottle_db"
+)
+
+
 
 class MountainCondition:
     name: str
@@ -11,10 +25,16 @@ class MountainCondition:
         self.description = description
         self.image_link = image_link
 
+        
+@error(404)
+def error404(error):
+
+    return '<pre> &lt;?php <br> echo \'Nothing here!\'; </pre>';
+
 @route('/')
 @route('/home')
 @view('index')
-def home():
+def home(): 
     """Renders the home page."""
     return dict(
         year=datetime.now().year,
@@ -50,21 +70,24 @@ def home():
 @route('/contact')
 @view('contact')
 def contact():
-    """Renders the contact page."""
     return dict(
         title='Contact',
         message='Your contact page.',
-        year=datetime.now().year
+        year=datetime.now().year,
     )
 
 @route('/about')
 @view('about')
 def about():
-    """Renders the about page."""
+    mycursor = mydb.cursor()
+    mycursor.execute("select lastname from stuff")
+    myresult = mycursor.fetchall()
+
     return dict(
         title='About',
         message='Your application description page.',
-        year=datetime.now().year
+        year=datetime.now().year,
+        authors = myresult
     )
 
 @route('/mnt/<name>')

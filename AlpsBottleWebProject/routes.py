@@ -79,6 +79,15 @@ def contact():
 @route('/about')
 @view('about')
 def about():
+    return dict(
+        title='About',
+        message='Your application description page.',
+        year=datetime.now().year,
+    )
+
+@route('/users')
+@view('users')
+def users():
     mycursor = mydb.cursor()
     mycursor.execute("select lastname from stuff")
     myresult = mycursor.fetchall()

@@ -1,6 +1,6 @@
-from bottle import route, view, error
+from bottle import route, view, error # pip install bottle
 from datetime import datetime
-import mysql.connector
+import mysql.connector  # pip install mysql-connector-python
 from mysql.connector import errorcode
 
 def govno():

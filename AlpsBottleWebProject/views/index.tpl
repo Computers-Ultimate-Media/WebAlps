@@ -1,6 +1,6 @@
 % rebase('layout.tpl', title='Home Page', mountain_condition=mountain_condition, year=year)
 
-<div class = "" >
+<div class="">
     <label> fflflf </label>
 </div>
 

@@ -10,7 +10,13 @@
     <div class="tb lg">
         <!--Высочайшая вершина мира.!-->
     </div>
-    <div class="tb lg"> {{ authors }}</div>
+    <div class="sm"> Наши пользователи:</div>
+    %for item in authors:
+    <br>
+    <div class="sm"> Логин: {{ item[0] }}</div>
+    <div class="sm"> Почта: {{ item[1] }}</div>
+    <br>
+    %end
 </div>
 </body>
 </html>

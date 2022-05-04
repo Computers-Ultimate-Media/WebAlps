@@ -1,18 +1,44 @@
-"""
-Routes and views for the bottle application.
-"""
-
 from bottle import route, view, error
 from datetime import datetime
 import mysql.connector
+from mysql.connector import errorcode
 
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="bottle_db"
-)
+def govno():
+    db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="root", use_pure=True)
 
+    cursor = db.cursor()
+    db_name = 'bottle_db'
+
+    def create_db(cursor):
+        try:
+            cursor.execute("create database {}".format(db_name))
+            print("Database created.")
+        except mysql.connector.Error as err:
+            print("Database creation failed:", err)
+            exit(1)
+
+    try:
+        db.database = db_name
+        print('Database {} already exist.'.format(db_name))
+    except mysql.connector.Error as err:
+        # database doesn't exist, create one
+        if errorcode.ER_BAD_DB_ERROR == err.errno:
+            create_db(cursor)
+            db.database = db_name
+
+    try:
+        cursor.execute("CREATE TABLE if not exists stuff (id INT AUTO_INCREMENT PRIMARY KEY, login VARCHAR(45), email VARCHAR(45))")
+    except mysql.connector.Error as err:
+        if errorcode.ER_TABLE_EXISTS_ERROR == err.errno:
+            print('Table stuff already exists.')
+    cursor.close()
+    db.close()
+
+
+govno()
 
 class MountainCondition:
     name: str
@@ -67,16 +93,6 @@ def home():
     )
 
 
-@route('/contact')
-@view('contact')
-def contact():
-    return dict(
-        title='Contact',
-        message='Your contact page.',
-        year=datetime.now().year,
-    )
-
-
 @route('/about')
 @view('about')
 def about():
@@ -87,18 +103,21 @@ def about():
     )
 
 
+def data_from_base(sql_: str):
+    my_cursor = mydb.cursor()
+    my_cursor.execute(sql_)
+    my_result = my_cursor.fetchall()
+    return my_result
+
+
 @route('/users')
 @view('users')
 def users():
-    my_cursor = mydb.cursor()
-    my_cursor.execute("select lastname from stuff")
-    my_result = my_cursor.fetchall()
-
     return dict(
         title='Users',
         message='Your application description page.',
         year=datetime.now().year,
-        authors=my_result
+        authors=data_from_base("select login, email from stuff")
     )
 
 

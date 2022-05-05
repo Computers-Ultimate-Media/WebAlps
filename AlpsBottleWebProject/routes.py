@@ -1,6 +1,6 @@
-from bottle import route, view, error  # pip install bottle
+from bottle import route, view, error   # pip install bottle
 from datetime import datetime
-import mysql.connector  # pip install mysql-connector-python
+import mysql.connector                  # pip install mysql-connector-python
 from mysql.connector import errorcode
 
 db = mysql.connector.connect(
@@ -20,7 +20,6 @@ def make_database_and_table():
         except mysql.connector.Error as err:
             print("Database creation failed:", err)
             exit(1)
-
     try:
         db.database = db_name
         print('Database {} already exist.'.format(db_name))
@@ -29,7 +28,6 @@ def make_database_and_table():
         if errorcode.ER_BAD_DB_ERROR == err.errno:
             create_db(cursor)
             db.database = db_name
-
     try:
         cursor.execute(
             "CREATE TABLE if not exists stuff (id INT AUTO_INCREMENT PRIMARY KEY, login VARCHAR(45), email VARCHAR(45))")

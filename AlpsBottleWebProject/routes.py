@@ -1,4 +1,4 @@
-from bottle import route, view, error   # pip install bottle
+from bottle import route, view, error  # pip install bottle
 from datetime import datetime
 from mountain import MountainCondition
 from database_ import make_database_and_table, data_from_base
@@ -8,7 +8,7 @@ make_database_and_table()
 
 @error(404)
 def error404():
-    return '<pre> &lt;?php <br> echo \'Nothing here!\'; </pre>';
+    return '<pre> &lt;?php <br> echo \'Nothing here!\'; </pre>'
 
 
 @route('/')
@@ -57,9 +57,6 @@ def about():
     )
 
 
-
-
-
 @route('/users')
 @view('users')
 def users():
@@ -105,10 +102,8 @@ def preview(name):
     dicts = [d1, d2]
 
     for x in dicts:
-        if (x["val"] == name):
-            return x;
-
-    return "No pages found!!!!"
+        if x["val"] == name:
+            return x
 
     return dict(
         title='Mountain paradise',
@@ -145,10 +140,8 @@ def preview(name):
               title='Mountain paradise',
               year=datetime.now().year)
 
-    dicts = [d1, d2];
+    dicts = [d1, d2]
 
     for x in dicts:
-        if (x["val"] == name):
-            return x;
-
-    return "No pages found!!!!"
+        if x["val"] == name:
+            return x

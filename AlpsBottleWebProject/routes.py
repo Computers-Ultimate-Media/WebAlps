@@ -1,57 +1,13 @@
 from bottle import route, view, error   # pip install bottle
 from datetime import datetime
-import mysql.connector                  # pip install mysql-connector-python
-from mysql.connector import errorcode
-
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root", use_pure=True)
-
-
-def make_database_and_table():
-    cursor = db.cursor()
-    db_name = 'bottle_db'
-
-    def create_db(cursor):
-        try:
-            cursor.execute("create database {}".format(db_name))
-            print("Database created.")
-        except mysql.connector.Error as err:
-            print("Database creation failed:", err)
-            exit(1)
-    try:
-        db.database = db_name
-        print('Database {} already exist.'.format(db_name))
-    except mysql.connector.Error as err:
-        # database doesn't exist, create one
-        if errorcode.ER_BAD_DB_ERROR == err.errno:
-            create_db(cursor)
-            db.database = db_name
-    try:
-        cursor.execute(
-            "CREATE TABLE if not exists stuff (id INT AUTO_INCREMENT PRIMARY KEY, login VARCHAR(45), email VARCHAR(45))")
-    except mysql.connector.Error as err:
-        if errorcode.ER_TABLE_EXISTS_ERROR == err.errno:
-            print('Table stuff already exists.')
-
+from mountain import MountainCondition
+from database_ import make_database_and_table, data_from_base
 
 make_database_and_table()
 
 
-class MountainCondition:
-    name: str
-    description: str
-    image_link: str
-
-    def __init__(self, name: str, description: str, image_link: str):
-        self.name = name
-        self.description = description
-        self.image_link = image_link
-
-
 @error(404)
-def error404(error):
+def error404():
     return '<pre> &lt;?php <br> echo \'Nothing here!\'; </pre>';
 
 
@@ -59,7 +15,6 @@ def error404(error):
 @route('/home')
 @view('index')
 def home():
-    """Renders the home page."""
     return dict(
         year=datetime.now().year,
         mountain_condition=[
@@ -102,11 +57,7 @@ def about():
     )
 
 
-def data_from_base(sql_: str):
-    my_cursor = db.cursor()
-    my_cursor.execute(sql_)
-    my_result = my_cursor.fetchall()
-    return my_result
+
 
 
 @route('/users')
@@ -123,20 +74,6 @@ def users():
 @route('/mnt/<name>')
 @view('mountain')
 def preview(name):
-    """Renders the about page."""
-
-    # d1 = dict(
-    #    head = "",
-    #    description = "",
-    #    climb_h = "",
-    #    climb_text = "",
-    #    img1 = "",
-    #    location_text = "",
-    #    more_text = "",
-    #    last_text = "",
-    #    title='Mountain paradise',
-    #    year = datetime.now().year
-    #    )
     d1 = dict(
         val="everest",
         head="Высочайшая вершина мира.",
@@ -215,21 +152,3 @@ def preview(name):
             return x;
 
     return "No pages found!!!!"
-
-# class Bio
-#    name: str
-#    img: str
-#    description: str
-#    early_life: str
-#    death: str
-#    vid1: str
-#    vid2: str
-
-#    def __init__(self, name: str, img: str, description: str,early_life: str,  death: str,  vid1: str,  vid2: str):
-#        self.name = name
-#        self.img = img
-#        self.description = description
-#        self.early_life = early_life
-#        self.death = death
-#        self.vid1 = vid1        
-#        self.vid2 = vid2

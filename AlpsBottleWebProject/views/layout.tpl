@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +26,7 @@
                 <li class="nav-item"><a class="nav-link" href="/bio/messner">Р.А. Месснер</a></li>
                 <li class="nav-item"><a class="nav-link" href="/about">Контакты</a></li>
                 <li class="nav-item"><a class="nav-link" href="/users">Пользователи</a></li>
+                <li class="nav-item"><a class="nav-link" href="/registration">Регистрация</a></li>
             </ul>
         </div>
     </div>
@@ -34,6 +35,7 @@
     <hr/>
     <footer>
         <p>&copy; {{ year }} - Mountain paradise</p>
+        <p> {{ user_count[0] }} - пользователей в сети</p>
     </footer>
 </div>
 <script src="/static/scripts/jquery-1.10.2.js"></script>

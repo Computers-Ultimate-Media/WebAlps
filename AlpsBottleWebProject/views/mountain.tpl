@@ -1,4 +1,4 @@
-% rebase('layout.tpl', year=year)
+% rebase('layout.tpl', year=year, user_count=user_count)
 
 <!-- Шаблон страницы гор -->
 <html style="font-size: 16px;">

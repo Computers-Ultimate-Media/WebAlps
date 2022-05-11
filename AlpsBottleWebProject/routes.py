@@ -1,13 +1,35 @@
-from bottle import route, view, error  # pip install bottle
+from bottle import route, view, error, post, request  # pip install bottle
 from datetime import datetime
 from mountain import MountainCondition
-from database_ import make_database_and_table, data_from_base
+from database_ import make_database_and_table, data_from_base, insert_data_in_base
+import re
 
 make_database_and_table()
 
 
+@post('/', method='post')
+def my_form():
+    mail = request.forms.get('email')  # mail с формы
+    login = request.forms.get('login')  # login с формы
+    password = request.forms.get('password')  # pass с формы
+
+    if check_email(mail) is not None:
+        try:
+            sql = "INSERT INTO stuff (login, email, password) VALUES (%s, %s, %s)"
+            val = (login, mail, password)
+            insert_data_in_base(sql, val)
+        finally:
+            print("lol")
+
+
+def check_email(mail: str):
+    pattern = r'(\w+)@([A-Z0-9]+)\.([A-Z]{2,4})'
+    correct_mail = re.match(pattern, mail, flags=re.IGNORECASE)
+    return correct_mail
+
+
 @error(404)
-def error404():
+def error404(error):
     return '<pre> &lt;?php <br> echo \'Nothing here!\'; </pre>'
 
 
@@ -43,7 +65,8 @@ def home():
                 'Аннапурна — горный массив в Гималаях, где находятся высочайшие вершины — Аннапурна и Дхаулагири, разделенные самой глубокой на планете долиной Калигандаки.',
                 'https://i.imgur.com/0FdHZ42.jpg'
             ),
-        ]
+        ],
+        user_count=data_from_base("select count(*) from stuff", False)
     )
 
 
@@ -54,6 +77,17 @@ def about():
         title='About',
         message='Your application description page.',
         year=datetime.now().year,
+        user_count=data_from_base("select count(*) from stuff", False)
+    )
+
+
+@route('/registration')
+@view('registration')
+def registration():
+    return dict(
+        title='Registration',
+        year=datetime.now().year,
+        user_count=data_from_base("select count(*) from stuff", False)
     )
 
 
@@ -64,7 +98,8 @@ def users():
         title='Users',
         message='Your application description page.',
         year=datetime.now().year,
-        authors=data_from_base("select login, email from stuff")
+        authors=data_from_base("select login, email from stuff", True),
+        user_count=data_from_base("select count(*) from stuff", False)
     )
 
 
@@ -82,7 +117,8 @@ def preview(name):
         more_text="Высота её северной вершины, расположенной на территории Китая и считающейся главной, составляет 8848 метров. Это абсолютный рекорд среди высочайших гор Земли, которых насчитывается 117 (все они сосредоточены в регионе Центральной и Южной Азии). Южная вершина чуть ниже, 8760 метров, и ее можно назвать «интернациональной»: она находится на границе двух стран. Гора похожа на трехгранную пирамиду. Склон и ребра с юга настолько крутые, что снег и ледники на них не удерживаются. Не имеет снежного покрытия и скальная стена. Остальные ребра, начиная примерно с 5-километровой высоты, покрыты ледниками. Часть Эвереста, расположенная со стороны Непала, входит в состав национального парка «Сагарматха». Именно так – Сагарматха – называется высочайшая вершина мира на непальском языке (в переводе – «Небесная вершина»). С этой стороны она заслонена горами Нупцзе (7879 м) и Лхоцзе (8516 м). Красивые виды на нее открываются с окрестных гор Кала-Патхар и Гокио-Ри.",
         last_text="Джомолунгма – это название переводится с тибетского как «Повелительница ветров» – одна из десяти горных вершин, так называемых восьмитысячников, расположенных в Гималаях (в мире их всего 14). Несомненно, она остается самой привлекательной целью для альпинистов всего мира.",
         title='Mountain paradise',
-        year=datetime.now().year
+        year=datetime.now().year,
+        user_count=data_from_base("select count(*) from stuff", False)
     )
 
     d2 = dict(
@@ -96,7 +132,8 @@ def preview(name):
         more_text="Проведённые в последние десятилетия комплексные геологические исследования позволили уверенно отнести Эльбрус к категории потенциально активных вулканов, что стимулировало повышенный интерес к расшифровке истории и закономерностей развития магматизма в этом регионе, изучению происхождения магматических расплавов, поиску следов природных палеокатастроф, связанных с вулканическими извержениями.",
         last_text="Примерно 250 тыс. лет назад началось формирование современного вулкана Эльбрус. Двухконусный стратовулкан Эльбрус, извергавший лавы дацитового состава, в настоящее время представляет собой округлую в плане вершину со средним диаметром основания около 18 км. Фундамент вулканической постройки вскрыт вплоть до абсолютных отметок 3000-3900 м и сложен палеозойскими метаморфическими породами и гранитоидами. Таким образом, относительная высота вулкана Эльбрус составляет 2000—2500 м.",
         title='Mountain paradise',
-        year=datetime.now().year
+        year=datetime.now().year,
+        user_count=data_from_base("select count(*) from stuff", False)
     )
 
     dicts = [d1, d2]
@@ -108,6 +145,7 @@ def preview(name):
     return dict(
         title='Mountain paradise',
         year=datetime.now().year,
+        user_count=data_from_base("select count(*) from stuff", False)
     )
 
 
@@ -126,7 +164,9 @@ def preview(name):
               vid1="https://www.youtube.com/embed/OBpubDhDJ78",
               vid2="https://www.youtube.com/embed/t1GeXhcEXAA",
               title='Mountain paradise',
-              year=datetime.now().year)
+              year=datetime.now().year,
+              user_count=data_from_base("select count(*) from stuff", False)
+              )
 
     d2 = dict(val="messner",
               name="Райнхольд Андреас Месснер",
@@ -138,7 +178,9 @@ def preview(name):
               vid1="https://www.youtube.com/embed/WkS-cjwCOl8",
               vid2="https://www.youtube.com/embed/p7k4wSHF1yg",
               title='Mountain paradise',
-              year=datetime.now().year)
+              year=datetime.now().year,
+              user_count=data_from_base("select count(*) from stuff", False)
+              )
 
     dicts = [d1, d2]
 

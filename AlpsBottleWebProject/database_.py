@@ -40,8 +40,20 @@ def make_database_and_table():
             print('Table stuff already exists.')
 
 
-def data_from_base(sql_: str):
+def data_from_base(sql_: str, f_all: bool):
     my_cursor = db.cursor()
     my_cursor.execute(sql_)
-    my_result = my_cursor.fetchall()
+    if f_all:
+        my_result = my_cursor.fetchall()
+    else:
+        my_result = my_cursor.fetchone()
     return my_result
+
+
+def insert_data_in_base(sql_: str, val_: any):
+    my_cursor = db.cursor()
+    try:
+        my_cursor.execute(sql_, val_)
+        db.commit()
+    except:
+        print("mem")

@@ -1,4 +1,4 @@
-% rebase('layout.tpl', title='Home Page', mountain_condition=mountain_condition, year=year)
+% rebase('layout.tpl', title='Home Page', mountain_condition=mountain_condition, year=year, user_count=user_count)
 
 <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     <!-- Шаблон карточки с отображения списка гор -->

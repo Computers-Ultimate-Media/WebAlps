@@ -1,4 +1,4 @@
-% rebase('layout.tpl', title=title, year=year)
+% rebase('layout.tpl', title=title, year=year, user_count=user_count)
 
 <html style="font-size: 16px;">
 <head>

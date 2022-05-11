@@ -10,12 +10,16 @@ body {
     margin: 0;
 }
 
+.user-container {
+    padding-top: 50px;
+    padding-left: 40px;
+}
+
 .wrapper {
     height: 700px;
     margin: 0 auto 0;
     position: relative;
     width: 100%;
-
 }
 
 .slider {

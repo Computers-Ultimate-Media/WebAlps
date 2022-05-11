@@ -1,3 +1,4 @@
+import mysql.connector.errorcode
 from bottle import route, view, error, post, request, redirect  # pip install bottle
 from datetime import datetime
 from mountain import MountainCondition
@@ -8,25 +9,79 @@ import re
 make_database_and_table()
 
 
-@post('/', method='post')
+def is_valid_email(email: str) -> bool:
+    email_pattern = re.compile(r"([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+")
+    arr = email.split('@')
+    return bool(email_pattern.match(email)) and len(arr[0]) <= 64 and len(arr[1]) <= 255
+
+
+def is_valid_login(login: str) -> bool:
+    login_pattern = re.compile(r"^\w{3,16}$")
+    return bool(login_pattern.match(login))
+
+
+def is_valid_password(password: str) -> bool:
+    password_pattern = re.compile(r"^\w{3,16}$")
+    return bool(password_pattern.match(password))
+
+
+def validate_all(email, login, password):
+    error = ""
+
+    if not is_valid_email(email):
+        error = "email не соответствует шаблону"
+    elif not is_valid_login(login):
+        error = "никнейм должен состоять только из латинских символов/цифр и быть от 3 до 16 символов"
+    elif not is_valid_password(password):
+        error = "некорректный заголовок, вы не можете использовать от 20 до 100 символов"
+    elif is_insert_valid(email, login, password):
+        error = "такой пользователь уже существует"
+
+    if error != "":
+        return f"Ошибка: {error}"
+
+    return None
+
+
+@route('/check_registration', method='post')
+def check_registration():
+    from json import dumps as json_dumps, loads as json_loads
+
+    data = request.body.getvalue().decode('utf-8')
+    data = json_loads(data)
+
+    email = data['email']
+    login = data['login']
+    password = data['password']
+
+    ret = validate_all(email, login, password)
+    if ret is not None:
+        return json_dumps({'error': ret})
+
+    return json_dumps({'status': 'ok'})
+
+
+def is_insert_valid(email_, login_, password_) -> bool:
+    sql = "INSERT INTO stuff (login, email, password) VALUES (%s, %s, %s)"
+    val = (login_, email_, password_)
+
+    if len(data_from_base("select * from stuff where login = '{}'".format(login_), True)) > 0:
+        return True
+    else:
+        insert_data_in_base(sql, val)
+        return False
+
+
+@post('/registration', method='post')
 def my_form():
-    mail = request.forms.get('email')  # mail с формы
-    login = request.forms.get('login')  # login с формы
-    password = request.forms.get('password')  # pass с формы
+    email_ = request.forms.email  # mail с формы
+    login_ = request.forms.login  # login с формы
+    password_ = request.forms.password  # pass с формы
 
-    if check_email(mail) is not None:
-        try:
-            sql = "INSERT INTO stuff (login, email, password) VALUES (%s, %s, %s)"
-            val = (login, mail, password)
-            insert_data_in_base(sql, val)
-        finally:
-            print("lol")
+    # if validate_all(email_, login_, password_) is not None:
+    #     validate_all(email_, login_, password_)
 
-
-def check_email(mail: str):
-    pattern = r'(\w+)@([A-Z0-9]+)\.([A-Z]{2,4})'
-    correct_mail = re.match(pattern, mail, flags=re.IGNORECASE)
-    return correct_mail
+    return redirect('/users')
 
 
 @error(404)

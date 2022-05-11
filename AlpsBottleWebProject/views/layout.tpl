@@ -6,6 +6,8 @@
     <title>{{ title }} - My Bottle Application</title>
     <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/static/content/site.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/content/toastr.min.css">
+
     <script src="/static/scripts/modernizr-2.6.2.js"></script>
 
 </head>
@@ -39,8 +41,9 @@
         <p> {{ user_count[0] }} - пользователей в сети</p>
     </footer>
 </div>
-<script src="/static/scripts/jquery-1.10.2.js"></script>
+<script src="/static/scripts/jquery.min.js"></script>
 <script src="/static/scripts/bootstrap.js"></script>
-<script src="/static/scripts/respond.js"></script>
+<script src="/static/scripts/toastr.min.js"></script>
+<script src="/static/scripts/checker.js"></script>
 </body>
 </html>

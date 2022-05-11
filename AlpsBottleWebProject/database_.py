@@ -64,4 +64,4 @@ def insert_data_in_base(sql_: str, val_: any):
         my_cursor.execute(sql_, val_)
         db.commit()
     except mysql.connector.Error as error:
-        print(error)
+        pass

@@ -7,11 +7,9 @@
 <body>
 
 <div class="container-custom">
-    <a href="/reviews/new">
-        <button class="btn btn-primary">Post new review</button>
-    </a>
     <div class="review-container">
         %for review in reviews:
+        <br>
         <div>
             <h3>
                 {{review[0]}}
@@ -20,8 +18,14 @@
         </div>
         %end
     </div>
+    <div align="center">
+        <br>
+    <a href="/reviews/new">
+        <button class="btn btn-primary width-big" style="font-size : 22px">
+             Post new review
+        </button>
+    </a>
+        </div>
 </div>
-
-<footer></footer>
 </body>
 </html>

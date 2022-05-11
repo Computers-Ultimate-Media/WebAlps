@@ -21,8 +21,13 @@ body {
 }
 
 .limited-width {
-   word-wrap: break-word;
-   width: 100px;
+    word-wrap: break-word;
+    width: 70%;
+}
+
+.width-big{
+    width: 30%;
+    padding: 30px;
 }
 
 .wrapper {

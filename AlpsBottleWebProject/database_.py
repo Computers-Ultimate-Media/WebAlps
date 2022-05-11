@@ -32,12 +32,20 @@ def make_database_and_table():
         if errorcode.ER_BAD_DB_ERROR == err.errno:
             create_db(cursor)
             db.database = db_name
-    try:
-        cursor.execute(
-            "CREATE TABLE if not exists stuff (id INT AUTO_INCREMENT PRIMARY KEY, login VARCHAR(45), email VARCHAR(45))")
-    except mysql.connector.Error as err:
-        if errorcode.ER_TABLE_EXISTS_ERROR == err.errno:
-            print('Table stuff already exists.')
+
+    tables = {
+        "CREATE TABLE if not exists stuff (id INT AUTO_INCREMENT PRIMARY KEY, login VARCHAR(45), email VARCHAR(45))",
+        # vlad
+        "CREATE TABLE `reviews` (`author` varchar(120) NOT NULL, `text` varchar(255) NOT NULL, `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`author`,`text`,`date`)) "
+        # max
+    }
+
+    for table in tables:
+        try:
+            cursor.execute(table)
+        except mysql.connector.Error as err:
+            if errorcode.ER_TABLE_EXISTS_ERROR == err.errno:
+                print('Table already exists.')
 
 
 def data_from_base(sql_: str, f_all: bool):
@@ -55,5 +63,5 @@ def insert_data_in_base(sql_: str, val_: any):
     try:
         my_cursor.execute(sql_, val_)
         db.commit()
-    except:
-        print("mem")
+    except mysql.connector.Error as error:
+        print(error)

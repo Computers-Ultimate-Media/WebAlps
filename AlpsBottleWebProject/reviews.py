@@ -1,19 +1,18 @@
-import json
-from datetime import datetime
 from Review import Review
+from database_ import insert_data_in_base, data_from_base
 
 
-def filename() -> str:
-    return "reviews.json"
+def new_review(author: str, text: str):
+    sql = "insert into bottle_db.reviews (author, text) values (%s,%s);"
+    val = (author, text)
+    insert_data_in_base(sql, val)
 
 
 def get_reviews() -> list[Review]:
-    try:
-        with open(filename(), 'r') as f:
-            reviews: list[Review] = json.load(f)
-    except:
-        print("init file " + filename())
-        reviews = [Review("Admin", datetime.now(), "Welcome to our website!")]
-        with open(filename(), 'w') as f:
-            json.dump(reviews, f, ensure_ascii=False, indent=4)
-    return reviews
+    if (len(meme()) < 1):
+        new_review("Admin", "Be free to write your reviews!")
+    return meme()
+
+
+def meme():
+    return data_from_base("select * from reviews order by date asc",True)

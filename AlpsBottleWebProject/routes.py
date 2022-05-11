@@ -2,6 +2,7 @@ import mysql.connector.errorcode
 from bottle import route, view, error, post, request, redirect  # pip install bottle
 from datetime import datetime
 from mountain import MountainCondition
+from reviews import get_reviews, new_review
 from database_ import make_database_and_table, data_from_base, insert_data_in_base
 import re
 
@@ -242,3 +243,33 @@ def preview(name):
     for x in dicts:
         if x["val"] == name:
             return x
+
+@route('/reviews')
+@view('reviews')
+def reviews():
+    all_reviews = get_reviews()
+    return dict(
+        title='Mountain paradise',
+        year=datetime.now().year,
+              user_count=data_from_base("select count(*) from stuff", False),
+        reviews=all_reviews
+    )
+
+@route('/reviews/new')
+@view('new_review')
+def reviews():
+    return dict(
+        title='Mountain paradise',
+        year=datetime.now().year,
+        user_count=data_from_base("select count(*) from stuff", False)
+    )
+
+
+@post('/reviews/new', method='post')
+def new_review_form():
+    author = request.forms.get('AUTHOR')
+    text = request.forms.get('TEXT')
+
+    new_review(author, text)
+
+    return redirect('/reviews')

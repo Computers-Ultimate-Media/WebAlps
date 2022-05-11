@@ -26,9 +26,10 @@
                 <li class="nav-item"><a class="nav-link" href="/mnt/elbrus">Гора Эльбрус</a></li>
                 <li class="nav-item"><a class="nav-link" href="/bio/bukreev">А.Н. Букреев</a></li>
                 <li class="nav-item"><a class="nav-link" href="/bio/messner">Р.А. Месснер</a></li>
-                <li class="nav-item"><a class="nav-link" href="/about">Контакты</a></li>
+                <!--<li class="nav-item"><a class="nav-link" href="/about">Контакты</a></li>-->
                 <li class="nav-item"><a class="nav-link" href="/users">Пользователи</a></li>
                 <li class="nav-item"><a class="nav-link" href="/registration">Регистрация</a></li>
+                <li class="nav-item"><a class="nav-link" href="/reviews">Отзывы</a></li>
             </ul>
         </div>
     </div>

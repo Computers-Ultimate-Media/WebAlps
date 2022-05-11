@@ -10,18 +10,18 @@ import re
 
 make_database_and_table()
 
-
+# проверка email на валидность
 def is_valid_email(email: str) -> bool:
     email_pattern = re.compile(r"([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+")
     arr = email.split('@')
     return bool(email_pattern.match(email)) and len(arr[0]) <= 64 and len(arr[1]) <= 255
 
-
+# проверка login на валидность
 def is_valid_login(login: str) -> bool:
     login_pattern = re.compile(r"^\w{3,16}$")
     return bool(login_pattern.match(login))
 
-
+# проверка password на валидность
 def is_valid_password(password: str) -> bool:
     password_pattern = re.compile(r"^\w{3,16}$")
     return bool(password_pattern.match(password))
@@ -76,13 +76,6 @@ def is_insert_valid(email_, login_, password_) -> bool:
 
 @post('/registration', method='post')
 def my_form():
-    email_ = request.forms.email  # mail с формы
-    login_ = request.forms.login  # login с формы
-    password_ = request.forms.password  # pass с формы
-
-    # if validate_all(email_, login_, password_) is not None:
-    #     validate_all(email_, login_, password_)
-
     return redirect('/users')
 
 

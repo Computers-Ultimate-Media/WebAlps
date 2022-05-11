@@ -8,7 +8,7 @@ from modules.Humans import get_humans
 from database_ import make_database_and_table, data_from_base, insert_data_in_base
 import re
 
-make_database_and_table()
+make_database_and_table() # создание базы и таблиц
 
 # проверка email на валидность
 def is_valid_email(email: str) -> bool:
@@ -26,7 +26,7 @@ def is_valid_password(password: str) -> bool:
     password_pattern = re.compile(r"^\w{3,16}$")
     return bool(password_pattern.match(password))
 
-
+# вывод ошибки, если что то не прошло валидацию
 def validate_all(email, login, password):
     error = ""
 
@@ -44,7 +44,7 @@ def validate_all(email, login, password):
 
     return None
 
-
+# страница проверки введённых данных
 @route('/check_registration', method='post')
 def check_registration():
     from json import dumps as json_dumps, loads as json_loads
@@ -62,7 +62,7 @@ def check_registration():
 
     return json_dumps({'status': 'ok'})
 
-
+# проверка на существующую запись пользователя, иначе вставить новую
 def is_insert_valid(email_, login_, password_) -> bool:
     sql = "INSERT INTO stuff (login, email, password) VALUES (%s, %s, %s)"
     val = (login_, email_, password_)
@@ -73,17 +73,17 @@ def is_insert_valid(email_, login_, password_) -> bool:
         insert_data_in_base(sql, val)
         return False
 
-
+# редирект на страницу пользователей после регистрации
 @post('/registration', method='post')
 def my_form():
     return redirect('/users')
 
-
+# страница ошибки 404
 @error(404)
 def error404(error):
     return '<pre> &lt;?php <br> echo \'Nothing here!\'; </pre>'
 
-
+# главная страница
 @route('/')
 @route('/home')
 @view('index')
@@ -93,7 +93,7 @@ def home():
         mountain_condition=get_mountain_conditions()
     ))
 
-
+# страница о нас
 @route('/about')
 @view('about')
 def about():
@@ -103,7 +103,7 @@ def about():
         year=datetime.now().year
     ))
 
-
+# страница регистрации
 @route('/registration')
 @view('registration')
 def registration():
@@ -112,7 +112,7 @@ def registration():
         year=datetime.now().year,
     ))
 
-
+# страница пользователей
 @route('/users')
 @view('users')
 def users():

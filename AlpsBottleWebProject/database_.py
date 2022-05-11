@@ -5,13 +5,14 @@ HOST = "localhost"
 USER = "root"
 PASSWORD = "root"
 
+# строка подключения к базе
 db = mysql.connector.connect(
     host=HOST,
     user=USER,
     password=PASSWORD,
     use_pure=True)
 
-
+# создание базы и таблиц
 def make_database_and_table():
     cursor = db.cursor()
     db_name = 'bottle_db'
@@ -47,7 +48,7 @@ def make_database_and_table():
             if errorcode.ER_TABLE_EXISTS_ERROR == err.errno:
                 print('Table already exists.')
 
-
+# select данных из таблицы
 def data_from_base(sql_: str, f_all: bool):
     my_cursor = db.cursor()
     my_cursor.execute(sql_)
@@ -57,7 +58,7 @@ def data_from_base(sql_: str, f_all: bool):
         my_result = my_cursor.fetchone()
     return my_result
 
-
+# insert записи в таблицы
 def insert_data_in_base(sql_: str, val_: any):
     my_cursor = db.cursor()
     try:

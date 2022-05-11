@@ -55,5 +55,5 @@ def insert_data_in_base(sql_: str, val_: any):
     try:
         my_cursor.execute(sql_, val_)
         db.commit()
-    except:
-        print("mem")
+    except mysql.connector.Error as error:
+        pass

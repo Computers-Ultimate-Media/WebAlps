@@ -36,7 +36,7 @@ def make_database_and_table():
     tables = {
         "CREATE TABLE if not exists stuff (id INT AUTO_INCREMENT PRIMARY KEY, login VARCHAR(45), email VARCHAR(45))",
         # vlad
-        "CREATE TABLE `reviews` (`author` varchar(120) NOT NULL, `text` varchar(255) NOT NULL, `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`author`,`text`,`date`)) "
+        "CREATE TABLE `reviews` ( `author` varchar(40) NOT NULL,`text` varchar(255) NOT NULL, `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,  PRIMARY KEY (`author`,`text`,`date`)) "
         # max
     }
 

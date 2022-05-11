@@ -1,4 +1,4 @@
-from Review import Review
+from AlpsBottleWebProject.modules.Review import Review
 from database_ import insert_data_in_base, data_from_base
 
 

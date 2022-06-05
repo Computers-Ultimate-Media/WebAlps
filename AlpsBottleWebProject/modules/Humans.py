@@ -12,8 +12,7 @@ def get_humans():
               vid1="https://www.youtube.com/embed/OBpubDhDJ78",
               vid2="https://www.youtube.com/embed/t1GeXhcEXAA",
               title='Mountain paradise',
-              year=datetime.now().year,
-              user_count=data_from_base("select count(*) from stuff", False)
+              year=datetime.now().year
               )
 
     d2 = dict(val="messner",
@@ -26,8 +25,7 @@ def get_humans():
               vid1="https://www.youtube.com/embed/WkS-cjwCOl8",
               vid2="https://www.youtube.com/embed/p7k4wSHF1yg",
               title='Mountain paradise',
-              year=datetime.now().year,
-              user_count=data_from_base("select count(*) from stuff", False)
+              year=datetime.now().year
               )
 
     return [d1, d2]

@@ -137,16 +137,20 @@ def preview(name):
 @route('/bio/<name>')
 @view('human')
 def humans(name):
+    # gets
     dicts = get_humans()
     for x in dicts:
         if x["val"] == name:
             return add_users(x)
 
 
+# displays all reviews to user
 @route('/reviews')
 @view('reviews')
 def reviews():
+    # gets reviews from model
     all_reviews = get_reviews()
+
     return add_users(dict(
         title='Mountain paradise',
         year=datetime.now().year,
@@ -154,6 +158,7 @@ def reviews():
     ))
 
 
+# displays user form where he creates new reviews
 @route('/reviews/new')
 @view('new_review')
 def reviews():
@@ -163,13 +168,17 @@ def reviews():
     ))
 
 
+# method to get new review from user
 @post('/reviews/new', method='post')
 def new_review_form():
+    # gets input from form
     author = request.forms.get('AUTHOR')
     text = request.forms.get('TEXT')
 
+    # transfers params to model
     new_review(author, text)
 
+    # sends user to list with all reviews, his including
     return redirect('/reviews')
 
 
